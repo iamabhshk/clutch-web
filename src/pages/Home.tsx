@@ -1,6 +1,6 @@
 import { useQuery} from "@tanstack/react-query"
 import api from '../lib/api';
-
+import { useNavigate } from 'react-router-dom';
 type Post = {
     id: string;
     title: string;
@@ -13,6 +13,7 @@ type Post = {
 };
 
 function Home(){
+    const navigate = useNavigate()
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['posts'],
         queryFn: async () => {
@@ -24,6 +25,18 @@ function Home(){
     if (isLoading) return <div>Loading...</div>
     if (isError) return <div>Error: {error.message}</div>
     console.log(data)
+
+    function handlePostClick(postId: string) {
+        if(postId) {
+            navigate(`/post/${postId}`, { state: { message: 'Account created! Please sign in.' } });
+        }
+    }
+
+    function handleGameClick(slug: string) {
+        if(slug) {
+            navigate(`/game/${slug}`, { state: { message: 'Account created! Please sign in.' } });
+        }
+    }
 
     return (
         <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -37,6 +50,7 @@ function Home(){
                         <article
                             key={post.id}
                             className="flex border border-slate-700 rounded bg-slate-900 hover:border-slate-500 transition-colors duration-150 cursor-pointer"
+                            onClick={() => handlePostClick(post.id)}
                         >
                             <p className="text-slate-400 p-3">Voting placeholder</p>
 
@@ -44,7 +58,7 @@ function Home(){
 
                                 <div className="flex flex-wrap items-center gap-1.5 text-xs text-slate-400 mb-1">
                                     {post.game?.slug && (
-                                        <span className="font-bold text-cyan-400 hover:underline">
+                                        <span className="font-bold text-cyan-400 hover:underline" onClick={(e) => { e.stopPropagation(); handleGameClick(post.game?.slug); }}>
                                             {post.game.name}
                                         </span>
                                     )}

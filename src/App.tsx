@@ -8,18 +8,19 @@ import Register from './pages/Register'
 import NotFound from './pages/NotFound'
 import Navbar from './components/layout/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
-
+import CreatePost from './pages/CreatePost';  
 function App(){
   return (
     <>
       <Navbar />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/game/:slug" element={<GamePage />} />
-        <Route path="/home" element={<Home />} />
         <Route path="/post/:id" element={<ProtectedRoute><PostPage /></ProtectedRoute>} />
         <Route path="/profile/:username" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/create" element={<ProtectedRoute><CreatePost /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

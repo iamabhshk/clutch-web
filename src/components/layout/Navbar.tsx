@@ -17,6 +17,12 @@ function Navbar() {
                             <span className="text-sm text-slate-300">
                                 {user.gamertag}
                             </span>
+                            <Link
+                                to="/create"
+                                className="text-sm bg-cyan-500 text-slate-950 px-4 py-2 rounded-lg font-semibold hover:bg-cyan-400 transition"
+                            >
+                                + Post
+                            </Link>
                             <button
                                 onClick={logout}
                                 className="text-sm text-slate-400 hover:text-slate-100 transition"
